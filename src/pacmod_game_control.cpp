@@ -61,6 +61,11 @@ void GameControl::GamepadCb(const sensor_msgs::Joy::ConstPtr& msg)
     {
       enable_cmd_ = false;
     }
+  
+    // CHANGE
+    enable_cmd_ = true;
+
+    ROS_INFO_STREAM("------- HI JASON - ----------------------");
 
     // Only send messages when enabled, or when the state changes between enabled/disabled
     if (pacmod_enabled_rpt_ || enable_cmd_)
@@ -151,6 +156,9 @@ void GameControl::PublishCommands()
 
 void GameControl::PublishAccelerator()
 {
+
+  ROS_INFO_STREAM("------- We are in  - ----------------------");
+
   pacmod3_msgs::SystemCmdFloat accelerator_cmd_pub_msg;
 
   accelerator_cmd_pub_msg.enable = enable_cmd_;
@@ -166,6 +174,8 @@ void GameControl::PublishAccelerator()
   {
     accelerator_cmd_pub_msg.command = accel_scale_val_ * controller_->accelerator_value();
   }
+
+  ROS_INFO_STREAM("------- We are in  - ----------------------" << controller_->accelerator_value());
 
   accelerator_cmd_pub_.publish(accelerator_cmd_pub_msg);
 }
